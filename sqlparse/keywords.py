@@ -64,9 +64,9 @@ SQL_REGEX = {
         (r'[A-ZÀ-Ü]\w*(?=\()', tokens.Name),  # side effect: change kw to func
         (r'-?0x[\dA-F]+', tokens.Number.Hexadecimal),
         (r'-?\d*(\.\d+)?E-?\d+', tokens.Number.Float),
-        (r'(?![_A-ZÀ-Ü])-?(\d+(\.\d*)|\.\d+)(?![_A-ZÀ-Ü])',
+        (r'(?![_A-ZÀ-Ü])-?(\d+(\.\d*)|\.\d+)(?![_\dA-ZÀ-Ü])',
          tokens.Number.Float),
-        (r'(?![_A-ZÀ-Ü])-?\d+(?![_A-ZÀ-Ü])', tokens.Number.Integer),
+        (r'(?![_A-ZÀ-Ü])-?\d+(?![_\dA-ZÀ-Ü])', tokens.Number.Integer),
         (r"'(''|\\\\|\\'|[^'])*'", tokens.String.Single),
         # not a real string literal in ANSI SQL:
         (r'"(""|\\\\|\\"|[^"])*"', tokens.String.Symbol),

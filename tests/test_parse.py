@@ -137,12 +137,21 @@ def test_quoted_identifier():
 
 @pytest.mark.parametrize('name', [
     'foo', '_foo',  # issue175
-    '1_data',  # valid MySQL table name, see issue337
+    '1_data', '11_data', # valid MySQL table names, see issue337
 ])
 def test_valid_identifier_names(name):
     t = sqlparse.parse(name)[0].tokens
     assert isinstance(t[0], sql.Identifier)
     assert t[0].get_name() == name
+
+
+def test_qualified_identifier_starting_with_multiple_numbers():
+    t = sqlparse.parse('x.11_data a')[0].tokens
+    assert len(t) == 1
+    assert isinstance(t[0], sql.Identifier)
+    assert t[0].get_name() == 'a'
+    assert t[0].get_real_name() == '11_data'
+    assert t[0].get_parent_name() == 'x'
 
 
 def test_psql_quotation_marks():
